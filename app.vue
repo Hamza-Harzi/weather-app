@@ -7,28 +7,34 @@ const background = ref("");
 //     `https://api.openweathermap.org/data/2.5/weather?q=${search.value}&units=metric&appid=957ae1209925fcd33d53ee8c813ab383`
 // );
 
-const { data: city, error } = useAsyncData("city", async () => {
-  const response = await $fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${search.value}&units=metric&appid=957ae1209925fcd33d53ee8c813ab383`
-  );
+const { data: city, error } = useAsyncData(
+  "city",
+  async () => {
+    const response = await $fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${search.value}&units=metric&appid=957ae1209925fcd33d53ee8c813ab383`
+    );
 
-  const temp = response.main.temp;
+    const temp = response.main.temp;
 
-  if (temp <= -10) {
-    background.value =
-      "https://images.unsplash.com/photo-1483664852095-d6cc6870702d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3540&q=80";
-  } else if (temp > -10 && temp <= 0) {
-    background.value =
-      "https://images.unsplash.com/photo-1476820865390-c52aeebb9891?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3540&q=80";
-  } else if (temp > 0 && temp <= 10) {
-    background.value =
-      "https://images.unsplash.com/photo-1560258018-c7db7645254e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=4032&q=80";
-  } else {
-    background.value =
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3546&q=80";
+    if (temp <= -10) {
+      background.value =
+        "https://images.unsplash.com/photo-1483664852095-d6cc6870702d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3540&q=80";
+    } else if (temp > -10 && temp <= 0) {
+      background.value =
+        "https://images.unsplash.com/photo-1476820865390-c52aeebb9891?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3540&q=80";
+    } else if (temp > 0 && temp <= 10) {
+      background.value =
+        "https://images.unsplash.com/photo-1560258018-c7db7645254e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=4032&q=80";
+    } else {
+      background.value =
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3546&q=80";
+    }
+    return response;
+  },
+  {
+    watch: [search],
   }
-  return response;
-});
+);
 
 const handleClick = () => {
   const formatedSearch = input.value.trim().split(" ").join("+");
